@@ -49,7 +49,7 @@ class ParentNode(HTMLNode):
 
     # similar to parent but no value and children is required
     def __init__(self, tag, children, props=None):
-        super().__init__(self, tag, None, children, props)
+        super().__init__(tag, None, children, props)
 
     def to_html(self):
         # raise value error if no tag or children
@@ -59,12 +59,31 @@ class ParentNode(HTMLNode):
             raise ValueError("no children argument found")
         
         # TODO return string for html tag of node and its children
+        html_list = []
+        for node in self.children:
+            if type(node).__name__ != LeafNode:
+                node.to_html()
+
+            html_list.append(node.to_html())
+        html_string = "".join(html_list)
+        return f"<{self.tag}{self.props_to_html()}>{html_string}</{self.tag}>"
 
 
 def main():
     test_html = HTMLNode("a", "Click me!", [], {"href": "https://www.google.com"})
     test_leaf =  LeafNode("p", "This is a paragraph of text.")
-    print(test_html)
-    print(test_leaf)
+    test_parent = ParentNode(
+    "p",
+    [
+        LeafNode("b", "Bold text"),
+        LeafNode(None, "Normal text"),
+        LeafNode("i", "italic text"),
+        LeafNode(None, "Normal text"),
+        ParentNode("p", [LeafNode(None, "Nested text")])
+    ], {"href": "test.com"}
+)
+    # print(test_html)
+    # print(test_leaf)
+    print(test_parent.to_html())
     
 main()
