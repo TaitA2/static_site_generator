@@ -21,6 +21,6 @@ class HTMLNode():
 
 def main():
     test = HTMLNode("h1", "header", [], {"href": "https://google.com"})
-    print(test)
+    print(test.props_to_html())
 
 main()
