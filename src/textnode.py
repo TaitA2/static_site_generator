@@ -17,4 +17,5 @@ def main():
     test = TextNode("this is a test", "italic", "https://www.google.com" )
     print(test)
 
-main()
+if __name__ == "__main__":
+    main()

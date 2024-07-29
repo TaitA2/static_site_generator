@@ -75,16 +75,16 @@ def main():
     test_parent = ParentNode(
     "p",
     [
-        # LeafNode("b", "Bold text"),
-        # LeafNode(None, "Normal text"),
-        # LeafNode("i", "italic text"),
-        # LeafNode(None, "Normal text"),
-        # ParentNode("p", [LeafNode(None, "Nested text")])
+        LeafNode("b", "Bold text"),
+        LeafNode(None, "Normal text"),
+        LeafNode("i", "italic text"),
+        LeafNode(None, "Normal text"),
+        ParentNode("p", [LeafNode(None, "Nested text")])
     ], {"href": "test.com"}
 )
-    # print(test_html)
-    # print(test_leaf)
-    # print(test_parent.to_html())
+    print(test_html)
+    print(test_leaf)
+    print(test_parent.to_html())
 
-
-main()
+if __name__ == "__main__":
+    main()
