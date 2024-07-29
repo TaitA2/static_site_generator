@@ -58,7 +58,7 @@ class ParentNode(HTMLNode):
         if not self.children:
             raise ValueError("no children argument found")
         
-        # TODO return string for html tag of node and its children
+        # return string for html tag of node and its children
         html_list = []
         for node in self.children:
             if type(node).__name__ != LeafNode:
@@ -75,15 +75,16 @@ def main():
     test_parent = ParentNode(
     "p",
     [
-        LeafNode("b", "Bold text"),
-        LeafNode(None, "Normal text"),
-        LeafNode("i", "italic text"),
-        LeafNode(None, "Normal text"),
-        ParentNode("p", [LeafNode(None, "Nested text")])
+        # LeafNode("b", "Bold text"),
+        # LeafNode(None, "Normal text"),
+        # LeafNode("i", "italic text"),
+        # LeafNode(None, "Normal text"),
+        # ParentNode("p", [LeafNode(None, "Nested text")])
     ], {"href": "test.com"}
 )
     # print(test_html)
     # print(test_leaf)
-    print(test_parent.to_html())
-    
+    # print(test_parent.to_html())
+
+
 main()
