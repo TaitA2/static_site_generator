@@ -44,6 +44,9 @@ class LeafNode(HTMLNode):
         props_string = self.props_to_html()
         return f"<{self.tag}{props_string}>{self.value}</{self.tag}>"
 
+class ParentNode():
+
+    def __init__(self,):
 
 
 def main():
