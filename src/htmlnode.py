@@ -19,22 +19,23 @@ class HTMLNode():
 
     def __repr__(self):
         # return string representation of HTMLNode object
-        return f"HTMLNode(tag={self.tag}, value={self.value}, children={self.children}, props={self.props})"
+        return f"{type(self).__name__}(tag={self.tag}, value={self.value}, children={self.children}, props={self.props})"
 
 
 # LeafNode child class of HTMLNode 
 class LeafNode(HTMLNode):
 
-    # similar to parent but no children and value required
-    def __init__(self, tag=None, value=None, props=None):
+    # similar to parent but no children and value is required
+    def __init__(self, tag, value, props=None):
         super().__init__(tag, value, None, props)
+        
         
 
     def to_html(self):
         
         # raise ValueError if missing value
         if self.value == None:
-            raise ValueError
+            raise ValueError("no value argument found")
         
         # return value as raw text if no tag
         if not self.tag:
@@ -44,15 +45,26 @@ class LeafNode(HTMLNode):
         props_string = self.props_to_html()
         return f"<{self.tag}{props_string}>{self.value}</{self.tag}>"
 
-class ParentNode():
+class ParentNode(HTMLNode):
 
-    def __init__(self,):
+    # similar to parent but no value and children is required
+    def __init__(self, tag, children, props=None):
+        super().__init__(self, tag, None, children, props)
+
+    def to_html(self):
+        # raise value error if no tag or children
+        if not self.tag:
+            raise ValueError("no tag argument found")
+        if not self.children:
+            raise ValueError("no children argument found")
+        
+        # TODO return string for html tag of node and its children
 
 
 def main():
-    test =  LeafNode("p", "This is a paragraph of text.")
-    test2 = LeafNode("a", "Click me!", {"href": "https://www.google.com"})
-    print(test.to_html())
-    print(test2.to_html())
-
+    test_html = HTMLNode("a", "Click me!", [], {"href": "https://www.google.com"})
+    test_leaf =  LeafNode("p", "This is a paragraph of text.")
+    print(test_html)
+    print(test_leaf)
+    
 main()

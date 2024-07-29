@@ -1,3 +1,3 @@
 # TODO
 
-* figure out how to overwrite __init__ of child class alongside super().__init__()
+* implement ParentNode.to_html() method using recursion
