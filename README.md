@@ -1,3 +1,3 @@
 # Static Site Generator
 
-* static site generot guided project for Boot Dev
+a static site generator guided project for Boot Dev
