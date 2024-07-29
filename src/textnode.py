@@ -14,7 +14,7 @@ class TextNode():
         return f"TextNode({self.text}, {self.text_type}, {self.url})"
 
 def main():
-    test = TextNode("this is a test", "italic", "https://www.google.com" )
+    test = TextNode("this is a test", "link", "https://www.google.com" )
     print(test)
 
 if __name__ == "__main__":
