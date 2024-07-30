@@ -40,7 +40,7 @@ def split_nodes_image(old_nodes):
         # return original TextNode if no img found
         if extracted == []:
             new_nodes.append(old_node)
-            break
+            continue
 
         # replace extracted segments with '__REPLACED__'
         for e in extracted:
@@ -91,7 +91,7 @@ def split_nodes_link(old_nodes):
         # return original TextNode if no link found
         if extracted == []:
             new_nodes.append(old_node)
-            break
+            continue
 
         # replace extracted segments with '__REPLACED__'
         for e in extracted:
