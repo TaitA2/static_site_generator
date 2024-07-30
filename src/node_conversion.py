@@ -45,5 +45,4 @@ test_node = TextNode("bold test", "bold")
 # print(text_node_to_html_node(test_node).to_html())
 text = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
 nodes = text_to_textnodes(text)
-for node in nodes:
-    print(node)
+print(nodes)

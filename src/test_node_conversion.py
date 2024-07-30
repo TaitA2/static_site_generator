@@ -1,10 +1,11 @@
 import unittest
 
-from textnode import TextNode
-from htmlnode import HTMLNode, LeafNode, ParentNode
-from main import text_node_to_html_node
+from textnode import *
+from htmlnode import *
+from node_conversion import *
 
-class TestConversion(unittest.TestCase):
+# test conversion of TextNodes to HTMLNodes
+class TestTextNodeToHTHMLNode(unittest.TestCase):
 
     # test bold text type
     def test_bold(self):
@@ -48,4 +49,23 @@ class TestConversion(unittest.TestCase):
             text_node = TextNode("invalid test", "underline")
             html_node = text_node_to_html_node(text_node)
             
+# test conversion of raw text to list of TextNodes
+class TestTextToTextNode(unittest.TestCase):
+    def test_text_to_textnodes(self):
+        text = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+        nodes = text_to_textnodes(text)
+        expected = [TextNode("This is ", "text"), 
+                    TextNode("text", "bold"), 
+                    TextNode(" with an ", "text"), 
+                    TextNode("italic", "italic"), 
+                    TextNode(" word and a ", "text"), 
+                    TextNode("code block", "code"), 
+                    TextNode(" and an ", "text"), 
+                    TextNode("obi wan image", "img", "https://i.imgur.com/fJRm4Vk.jpeg"), 
+                    TextNode(" and a ", "text"), 
+                    TextNode("link", "link", "https://boot.dev")]
+        print(f"\nExpected:\n{expected}\nActual:\n{nodes}")
+        self.assertEqual(nodes, expected)
 
+if __name__ == "__main__":
+    unittest.main()
