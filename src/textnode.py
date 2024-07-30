@@ -11,7 +11,7 @@ class TextNode():
     
     def __repr__(self):
         # return string representation of TextNode object
-        return f"TextNode({self.text}, {self.text_type}, {self.url})"
+        return f"TextNode({self.text}, {self.text_type}, {self.url})" if self.url != None else f"TextNode({self.text}, {self.text_type})"
 
 # convert one text node into list of text nodes based on delimiter e.g ' = code or ** = bold 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
