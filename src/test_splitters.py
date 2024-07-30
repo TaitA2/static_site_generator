@@ -43,7 +43,19 @@ class TestSplitDelimiter(unittest.TestCase):
             split_nodes_delimiter([old_node], "**", "bold")
 
 class TestSplitImage(unittest.TestCase):
-    def test_img(self):
+    def test_img1(self):
+        node = TextNode(
+            "This is text with one ![test img](https://i.imgur.com/aKaOqIh.gif) in the middle.",
+            "text",
+        )
+        new_nodes = split_nodes_image([node])
+        expected = [TextNode("This is text with one ", "text"),
+                    TextNode("test img", "img", "https://i.imgur.com/aKaOqIh.gif"),
+                    TextNode(" in the middle.", "text")]
+        print(f"\nExpected:\n{expected}\nActual:\n{new_nodes}")
+        self.assertEqual(new_nodes, expected)
+
+    def test_img2(self):
         node = TextNode(
             "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)",
             "text",)
@@ -56,7 +68,19 @@ class TestSplitImage(unittest.TestCase):
         self.assertEqual(new_nodes, expected)
 
 class TestSplitLink(unittest.TestCase):
-    def test_link(self):
+    def test_link1(self):
+        node = TextNode(
+            "This is text with one [test link](https://test.com) in the middle.",
+            "text",
+        )
+        new_nodes = split_nodes_link([node])
+        expected = [TextNode("This is text with one ", "text"),
+                    TextNode("test link", "link", "https://test.com"),
+                    TextNode(" in the middle.", "text")]
+        print(f"\nExpected:\n{expected}\nActual:\n{new_nodes}")
+        self.assertEqual(new_nodes, expected)
+
+    def test_link2(self):
         node = TextNode(
             "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)",
             "text",)
