@@ -10,6 +10,13 @@ class TestImageExtraction(unittest.TestCase):
         print(f"\nExpected:\n{expected}\nActual:\n{result}")
         self.assertEqual(result, expected)
 
+    def test_no_img(self):
+        text = "This text has no link or img inside"
+        result = extract_markdown_images(text)
+        expected = []
+        print(f"\nExpected:\n{expected}\nActual:\n{result}")
+        self.assertEqual(result, expected)
+        
 
 class TestLinkExtraction(unittest.TestCase):
     def test_link(self):
@@ -18,6 +25,14 @@ class TestLinkExtraction(unittest.TestCase):
         expected = [("to boot dev", "https://www.boot.dev"), ("to youtube", "https://www.youtube.com/@bootdotdev")]
         print(f"\nExpected:\n{expected}\nActual:\n{result}")
         self.assertEqual(result, expected)
+    
+    def test_no_link(self):
+        text = "This text has no link or img inside"
+        result = extract_markdown_links(text)
+        expected = []
+        print(f"\nExpected:\n{expected}\nActual:\n{result}")
+        self.assertEqual(result, expected)
+        
 
 if __name__ == "__main__":
     unittest.main()

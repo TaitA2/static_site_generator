@@ -1,6 +1,6 @@
 import unittest
 
-from textnode import TextNode, split_nodes_delimiter
+from textnode import *
 
 
 class TestTextNode(unittest.TestCase):
@@ -30,7 +30,7 @@ class TestTextNode(unittest.TestCase):
         self.assertNotEqual(node, node2)
     
 class TestSplitNodes(unittest.TestCase):
-    
+
     # test for code block
     def test_code_block(self):
         old_node = TextNode("This is text with a `code block` word", "text")

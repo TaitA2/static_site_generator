@@ -1,5 +1,5 @@
 from textnode import TextNode
-from htmlnode import HTMLNode, LeafNode, ParentNode
+from htmlnode import *
 
 # convert text node to html node
 def text_node_to_html_node(text_node):
