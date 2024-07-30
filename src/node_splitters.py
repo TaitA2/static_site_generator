@@ -1,6 +1,3 @@
-# THIS IS A TEST FOR GIT
-
-
 from textnode import *
 from extraction import *
 
