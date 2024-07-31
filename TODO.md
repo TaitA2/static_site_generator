@@ -1,3 +1,3 @@
 # TODO
 
-* add <li> tag to list items in list block
+* make unit tests for markdown_to_html_node() in conversions.py
