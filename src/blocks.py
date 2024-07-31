@@ -1,7 +1,7 @@
 import re
 # convert raw markdown to list of "block" strings
 
-def markdown_to_block(markdown):
+def markdown_to_blocks(markdown):
     blocks = markdown.split("\n\n")
     cleaned_blocks = []
     for block in blocks:

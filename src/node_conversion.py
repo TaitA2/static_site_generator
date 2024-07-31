@@ -1,13 +1,16 @@
 from textnode import TextNode
 from htmlnode import *
 from node_splitters import *
+from blocks import *
+
+tag_dict = {"bold": "b", "italic": "i", "code": "code", "link": "a", "img": "img",   # inline tags
+            "paragraph": "p", "heading": "h", "code": "code", "quote": "blockquote", "unordered_list": "ul", "ordered_list": "ol" }  # block tags
 
 # convert text node to html node
 def text_node_to_html_node(text_node):
     text = text_node.text
     text_type = text_node.text_type
     url = text_node.url
-    tag_dict = {"bold": "b", "italic": "i", "code": "code", "link": "a", "img": "img"}
 
     # text type text
     if text_type == "text":
@@ -40,6 +43,29 @@ def text_to_textnodes(text):
     italic_split = split_nodes_delimiter(bold_split, "*", "italic")
     
     return italic_split
+
+
+def markdown_to_html_node(markdown):
+    blocks = markdown_to_blocks(markdown)
+    block_nodes = []
+    for block in blocks:
+        # create list of inline HTMLNodes
+        text_nodes = text_to_textnodes(block)
+        inline_nodes = [text_node_to_html_node(node) for node in text_nodes]
+
+        # find block type
+        block_type = block_to_block_type(block)
+        # find tag
+        tag = tag_dict[block_type]
+        # assign default values to be overwritten
+        children = None
+        props = None
+
+        # create html node
+        block_node = HTMLNode(tag, block, children, props)
+    
+    return "<div>"+"".join(block_nodes)+"</div>"
+
 
 test_node = TextNode("bold test", "bold")
 # print(text_node_to_html_node(test_node).to_html())
