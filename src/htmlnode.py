@@ -29,7 +29,6 @@ class LeafNode(HTMLNode):
     def __init__(self, tag, value, props=None):
         super().__init__(tag, value, None, props)
         
-        
 
     def to_html(self):
         
@@ -43,6 +42,7 @@ class LeafNode(HTMLNode):
 
         # convert to html
         props_string = self.props_to_html()
+
         return f"<{self.tag}{props_string}>{self.value}</{self.tag}>"
 
 class ParentNode(HTMLNode):
@@ -66,6 +66,8 @@ class ParentNode(HTMLNode):
 
             html_list.append(node.to_html())
         html_string = "".join(html_list)
+        if self.tag == "code":
+            return f"<pre><{self.tag}{self.props_to_html()}>{html_string}</{self.tag}></pre>"
         return f"<{self.tag}{self.props_to_html()}>{html_string}</{self.tag}>"
 
 

@@ -2,6 +2,7 @@ from textnode import TextNode
 from htmlnode import *
 from node_splitters import *
 from blocks import *
+import re
 
 tag_dict = {"bold": "b", "italic": "i", "code": "code", "link": "a", "img": "img", "list_item": "li",   # inline tags
             "paragraph": "p", "heading": "h", "code": "code", "quote": "blockquote", "unordered_list": "ul", "ordered_list": "ol" }  # block tags
@@ -38,16 +39,16 @@ def text_to_textnodes(text):
     text_node = TextNode(text, "text",)
     img_split = split_nodes_image([text_node])
     link_split = split_nodes_link(img_split)
-    code_split = split_nodes_delimiter(link_split, r"`{1}", "code")
+    code_split = split_nodes_delimiter(link_split, "`", "code")
     bold_split = split_nodes_delimiter(code_split, "**", "bold")
-    italic_split = split_nodes_delimiter(bold_split, r".+\*", "italic")
+    italic_split = split_nodes_delimiter(bold_split, "*", "italic")
     
     return italic_split
 
 
 def markdown_to_html_node(markdown):
     blocks = markdown_to_blocks(markdown)
-    print(blocks)
+    # print(blocks)
     block_nodes = []
     for block in blocks:
         # find block type
@@ -61,12 +62,18 @@ def markdown_to_html_node(markdown):
             hash_count = len(hashes)
             tag = f"{tag}{hash_count}"
             block = block.replace(hashes, "").strip()
+        
+        # remove backticks from code block
+        if block_type == "code":
+            block = block.replace("```", "")
+
 
         text_nodes = text_to_textnodes(block)
         children = []
         # add <li> to list items
         if block_type == ("unordered_list" or "ordered_list"):
-            list_items = block.split("\n")
+            list_items = re.split(r"(?<!\n)\*", block)
+            list_items = [item for item in list_items if item]
             
             children = [LeafNode("li", li[1:].strip()) for li in list_items]
 
@@ -91,13 +98,14 @@ test_node = TextNode("bold test", "bold")
 # print(nodes)
 
 markdown = """
-## This is the heading.
+### This is the heading.
 
 This is a **bold** word, an *italic* word in a paragraph
 
-* This is a list block
-* with three list items
-* like this one
+ * This is a list block
+ * with three list items
+ * like this one
+ * and a risky bold one too
 
 ```This is a code block```"""
 print(markdown_to_html_node(markdown))
