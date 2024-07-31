@@ -1,7 +1,7 @@
 from textnode import *
 from extraction import *
 
-# convert one text node into list of text nodes based on delimiter e.g ' = code or ** = bold 
+# convert one TextNode into list of text nodes based on delimiter e.g ' = code or ** = bold 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     # list of new nodes to be returned
     new_nodes = []

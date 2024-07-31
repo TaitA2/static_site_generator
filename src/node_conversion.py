@@ -38,9 +38,9 @@ def text_to_textnodes(text):
     text_node = TextNode(text, "text",)
     img_split = split_nodes_image([text_node])
     link_split = split_nodes_link(img_split)
-    code_split = split_nodes_delimiter(link_split, "`", "code")
+    code_split = split_nodes_delimiter(link_split, r"`{1}", "code")
     bold_split = split_nodes_delimiter(code_split, "**", "bold")
-    italic_split = split_nodes_delimiter(bold_split, "*", "italic")
+    italic_split = split_nodes_delimiter(bold_split, r".+\*", "italic")
     
     return italic_split
 
