@@ -13,7 +13,7 @@ class TestTextNodeToHTHMLNode(unittest.TestCase):
         html_node = text_node_to_html_node(text_node)
         expected = "<b>bold test</b>"
         result = html_node.to_html()
-        print(f"\nExpected:\n{expected}\nActual:\n{result}")
+        # print(f"\nExpected:\n{expected}\nActual:\n{result}")
         self.assertEqual(expected, result)
 
     # test italic text type
@@ -22,7 +22,7 @@ class TestTextNodeToHTHMLNode(unittest.TestCase):
         html_node = text_node_to_html_node(text_node)
         expected = "<i>italic test</i>"
         result = html_node.to_html()
-        print(f"\nExpected:\n{expected}\nActual:\n{result}")
+        # print(f"\nExpected:\n{expected}\nActual:\n{result}")
         self.assertEqual(expected, result)
 
     # test link text type
@@ -31,7 +31,7 @@ class TestTextNodeToHTHMLNode(unittest.TestCase):
         html_node = text_node_to_html_node(text_node)
         expected = '<a href="https://www.link_test.com">link test</a>'
         result = html_node.to_html()
-        print(f"\nExpected:\n{expected}\nActual:\n{result}")
+        # print(f"\nExpected:\n{expected}\nActual:\n{result}")
         self.assertEqual(expected, result)
 
     # test img text type
@@ -40,7 +40,7 @@ class TestTextNodeToHTHMLNode(unittest.TestCase):
         html_node = text_node_to_html_node(text_node)
         expected = '<img src="https://www.img_test.com" alt="img test"></img>'
         result = html_node.to_html()
-        print(f"\nExpected:\n{expected}\nActual:\n{result}")
+        # print(f"\nExpected:\n{expected}\nActual:\n{result}")
         self.assertEqual(expected, result)
 
     # test invalid text type (eg underline)
@@ -64,7 +64,7 @@ class TestTextToTextNode(unittest.TestCase):
                     TextNode("obi wan image", "img", "https://i.imgur.com/fJRm4Vk.jpeg"), 
                     TextNode(" and a ", "text"), 
                     TextNode("link", "link", "https://boot.dev")]
-        print(f"\nExpected:\n{expected}\nActual:\n{nodes}")
+        # print(f"\nExpected:\n{expected}\nActual:\n{nodes}")
         self.assertEqual(nodes, expected)
 
 if __name__ == "__main__":

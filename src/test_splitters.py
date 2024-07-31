@@ -11,7 +11,7 @@ class TestSplitDelimiter(unittest.TestCase):
             TextNode("This is text with a ", "text"),
             TextNode("code block", "code"),
             TextNode(" word", "text"),]
-        print(f"\nExpected:\n{expected}\nActual:\n{new_nodes}")
+        # print(f"\nExpected:\n{expected}\nActual:\n{new_nodes}")
         self.assertEqual(new_nodes, expected)
 
     # test for italic
@@ -22,7 +22,7 @@ class TestSplitDelimiter(unittest.TestCase):
             TextNode("This is text with an ", "text"),
             TextNode("italic", "italic"),
             TextNode(" word", "text"),]
-        print(f"\nExpected:\n{expected}\nActual:\n{new_nodes}")
+        # print(f"\nExpected:\n{expected}\nActual:\n{new_nodes}")
         self.assertEqual(new_nodes, expected)
 
     # test for bold 
@@ -33,7 +33,7 @@ class TestSplitDelimiter(unittest.TestCase):
             TextNode("This is text with a ", "text"),
             TextNode("bold", "bold"),
             TextNode(" word", "text"),]
-        print(f"\nExpected:\n{expected}\nActual:\n{new_nodes}")
+        # print(f"\nExpected:\n{expected}\nActual:\n{new_nodes}")
         self.assertEqual(new_nodes, expected)
 
     # test for no closing delimiter
@@ -52,7 +52,7 @@ class TestSplitImage(unittest.TestCase):
         expected = [TextNode("This is text with one ", "text"),
                     TextNode("test img", "img", "https://i.imgur.com/aKaOqIh.gif"),
                     TextNode(" in the middle.", "text")]
-        print(f"\nExpected:\n{expected}\nActual:\n{new_nodes}")
+        # print(f"\nExpected:\n{expected}\nActual:\n{new_nodes}")
         self.assertEqual(new_nodes, expected)
 
     def test_img2(self):
@@ -64,7 +64,7 @@ class TestSplitImage(unittest.TestCase):
                     TextNode("rick roll", "img", "https://i.imgur.com/aKaOqIh.gif"), 
                     TextNode(" and ", "text"), 
                     TextNode("obi wan", "img", "https://i.imgur.com/fJRm4Vk.jpeg")]
-        print(f"\nExpected:\n{expected}\nActual:\n{new_nodes}")
+        # print(f"\nExpected:\n{expected}\nActual:\n{new_nodes}")
         self.assertEqual(new_nodes, expected)
 
 class TestSplitLink(unittest.TestCase):
@@ -89,7 +89,7 @@ class TestSplitLink(unittest.TestCase):
                     TextNode("to boot dev", "link", "https://www.boot.dev"),
                     TextNode(" and ", "text"),
                     TextNode("to youtube", "link", "https://www.youtube.com/@bootdotdev"),]
-        print(f"\nExpected:\n{expected}\nActual:\n{new_nodes}")
+        # print(f"\nExpected:\n{expected}\nActual:\n{new_nodes}")
         self.assertEqual(new_nodes, expected)
 
 
