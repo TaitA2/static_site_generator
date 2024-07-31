@@ -3,7 +3,7 @@ from htmlnode import *
 from node_splitters import *
 from blocks import *
 
-tag_dict = {"bold": "b", "italic": "i", "code": "code", "link": "a", "img": "img",   # inline tags
+tag_dict = {"bold": "b", "italic": "i", "code": "code", "link": "a", "img": "img", "list_item": "li",   # inline tags
             "paragraph": "p", "heading": "h", "code": "code", "quote": "blockquote", "unordered_list": "ul", "ordered_list": "ol" }  # block tags
 
 # convert text node to html node
@@ -55,16 +55,26 @@ def markdown_to_html_node(markdown):
         # find tag
         tag = tag_dict[block_type]
 
+        # add different header tags eg h1, h2 and remove leading '#'s
+        if block_type == "heading":
+            hashes = "".join(re.findall(r"^#+", block))
+            hash_count = len(hashes)
+            tag = f"{tag}{hash_count}"
+            block = block.replace(hashes, "").strip()
 
-        # create list of inline HTMLNodes
-        # avoids error with list items and italic sharing a prefix
-        if tag == "ul":
-            text_nodes = text_to_textnodes(block[1:])
+        text_nodes = text_to_textnodes(block)
+        children = []
+        # add <li> to list items
+        if block_type == ("unordered_list" or "ordered_list"):
+            list_items = block.split("\n")
+            
+            children = [LeafNode("li", li[1:].strip()) for li in list_items]
+
         else:
-            text_nodes = text_to_textnodes(block)
+            children = [text_node_to_html_node(node) for node in text_nodes]
 
-        children = [text_node_to_html_node(node) for node in text_nodes]
-
+        
+        
         # create html node
         block_node = ParentNode(tag=tag, children=children)
         block_nodes.append(block_node)
@@ -81,7 +91,7 @@ test_node = TextNode("bold test", "bold")
 # print(nodes)
 
 markdown = """
-# This is the heading.
+## This is the heading.
 
 This is a **bold** word, an *italic* word in a paragraph
 
