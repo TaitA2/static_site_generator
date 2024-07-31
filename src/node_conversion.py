@@ -47,6 +47,7 @@ def text_to_textnodes(text):
 
 def markdown_to_html_node(markdown):
     blocks = markdown_to_blocks(markdown)
+    print(blocks)
     block_nodes = []
     for block in blocks:
         # find block type
@@ -79,5 +80,5 @@ test_node = TextNode("bold test", "bold")
 # nodes = text_to_textnodes(text)
 # print(nodes)
 
-markdown = "# This is the heading.\nThis is a **bold** word, an *italic* word in a paragraph"
+markdown = "# This is the heading.\n\nThis is a **bold** word, an *italic* word in a paragraph"
 print(markdown_to_html_node(markdown))
