@@ -98,14 +98,16 @@ test_node = TextNode("bold test", "bold")
 # print(nodes)
 
 markdown = """
-### This is the heading.
+# This is the heading.
 
 This is a **bold** word, an *italic* word in a paragraph
 
- * This is a list block
+ * This is an unordered list block
  * with three list items
  * like this one
- * and a risky bold one too
+
+ 1. This is an ORDERED list
+ 2. I don't think it works
 
 ```This is a code block```"""
 print(markdown_to_html_node(markdown))
