@@ -14,7 +14,7 @@ def text_node_to_html_node(text_node):
 
     # text type text
     if text_type == "text":
-        return LeafNode(value=text)   
+        return LeafNode(None,text)   
 
     # text type bold, italic, code
     elif text_type in ["bold", "italic", "code"]:
@@ -49,26 +49,35 @@ def markdown_to_html_node(markdown):
     blocks = markdown_to_blocks(markdown)
     block_nodes = []
     for block in blocks:
-        # create list of inline HTMLNodes
-        text_nodes = text_to_textnodes(block)
-        inline_nodes = [text_node_to_html_node(node) for node in text_nodes]
-
         # find block type
         block_type = block_to_block_type(block)
         # find tag
         tag = tag_dict[block_type]
-        # assign default values to be overwritten
-        children = None
-        props = None
+
+
+        # create list of inline HTMLNodes
+        # avoids error with list items and italic sharing a prefix
+        if tag == "ul":
+            text_nodes = text_to_textnodes(block[1:])
+        else:
+            text_nodes = text_to_textnodes(block)
+
+        children = [text_node_to_html_node(node) for node in text_nodes]
 
         # create html node
-        block_node = HTMLNode(tag, block, children, props)
+        block_node = ParentNode(tag=tag, children=children)
+        block_nodes.append(block_node)
     
-    return "<div>"+"".join(block_nodes)+"</div>"
+    html_blocks = [block.to_html() for block in block_nodes]
+  
+    return "<div>"+"".join(html_blocks)+"</div>"
 
 
 test_node = TextNode("bold test", "bold")
 # print(text_node_to_html_node(test_node).to_html())
-text = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
-nodes = text_to_textnodes(text)
-print(nodes)
+# text = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+# nodes = text_to_textnodes(text)
+# print(nodes)
+
+markdown = "# This is the heading.\nThis is a **bold** word, an *italic* word in a paragraph"
+print(markdown_to_html_node(markdown))

@@ -10,6 +10,8 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         # add the unchanged node if it is not text_type text
         if old_node.text_type != "text":
             new_nodes.append(old_node)
+
+            
         # split the old node around the delimiter
         else:
             split_node = old_node.text.split(delimiter)
