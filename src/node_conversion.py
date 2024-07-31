@@ -80,5 +80,14 @@ test_node = TextNode("bold test", "bold")
 # nodes = text_to_textnodes(text)
 # print(nodes)
 
-markdown = "# This is the heading.\n\nThis is a **bold** word, an *italic* word in a paragraph"
+markdown = """
+# This is the heading.
+
+This is a **bold** word, an *italic* word in a paragraph
+
+* This is a list block
+* with three list items
+* like this one
+
+```This is a code block```"""
 print(markdown_to_html_node(markdown))
