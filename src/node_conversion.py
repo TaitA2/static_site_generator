@@ -75,14 +75,14 @@ def markdown_to_html_node(markdown):
             list_items = re.split(r"\n *\* +", block[1:])
             list_items = [item for item in list_items if item]
             # add italics to list items
-            list_items = [li.replace(" *", "<i>").replace("* ", "</i>").replace(" _", "<i>").replace("_ ", "</i>") for li in list_items]
+            list_items = [li.replace(" *", " <i>").replace("* ", "</i> ").replace(" _", "  1<i>").replace("_ ", "</i>  1") for li in list_items]
             children = [LeafNode("li", li.strip()) for li in list_items]
 
         elif block_type == ("ordered_list"):
             list_items = re.split(r"\d+\. ", block)
             list_items = [item for item in list_items if item]
             # add italics to list items
-            list_items = [li.replace(" *", "<i>").replace("* ", "</i>").replace(" _", "<i>").replace("_ ", "</i>") for li in list_items]
+            list_items = [li.replace(" *", " <i>").replace("* ", "</i> ").replace(" _", "  1<i>").replace("_ ", "</i>  1") for li in list_items]
             children = [LeafNode("li", li.strip()) for li in list_items]
 
         else:
@@ -123,5 +123,5 @@ This is a **bold** word, an *italic* word, and a `code word` in a paragraph
 ```This is a code block```
 """
 html_node = markdown_to_html_node(markdown)
-# print(html_node)
+print(html_node)
 print(">\n<".join(html_node.split("><")))

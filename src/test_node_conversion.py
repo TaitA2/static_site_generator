@@ -67,5 +67,51 @@ class TestTextToTextNode(unittest.TestCase):
         # print(f"\nExpected:\n{expected}\nActual:\n{nodes}")
         self.assertEqual(nodes, expected)
 
+class TestMarkdownToHTMLNode(unittest.TestCase):
+    def test_headings(self):
+        markdown = "# This is heading 1\n\n## This is heading 2\n\n### This is heading 3\n\n#### This is heading 4"
+        html_node = markdown_to_html_node(markdown)
+        expected = "<div><h1>This is heading 1</h1><h2>This is heading 2</h2><h3>This is heading 3</h3><h4>This is heading 4</h4></div>"
+        print(f"\nExpected:\n{expected}\nActual:\n{html_node}")
+        self.assertEqual(html_node, expected)
+
+    def test_paragraph(self):
+        markdown = "This is a **bold** word, an *italic* word, and a `code word` in a paragraph"
+        html_node = markdown_to_html_node(markdown)
+        expected = "<div><p>This is a <b>bold</b> word, an <i>italic</i> word, and a <code>code word</code> in a paragraph</p></div>"
+        print(f"\nExpected:\n{expected}\nActual:\n{html_node}")
+        self.assertEqual(html_node, expected)
+
+    def test_unordered_list(self):
+        markdown = "* This is\n* an unordered\n* list block"
+        html_node = markdown_to_html_node(markdown)
+        expected = "<div><ul><li>This is</li><li>an unordered</li><li>list block</li></ul></div>"
+        print(f"\nExpected:\n{expected}\nActual:\n{html_node}")
+        self.assertEqual(html_node, expected)
+    
+    def test_italic_unordered_list(self):
+        markdown = "* This is\n* an *italic* unordered\n* list block"
+        html_node = markdown_to_html_node(markdown)
+        expected = "<div><ul><li>This is</li><li>an <i>italic</i> unordered</li><li>list block</li></ul></div>"
+        print(f"\nExpected:\n{expected}\nActual:\n{html_node}")
+        self.assertEqual(html_node, expected)
+
+    def test_ordered_list(self):
+        markdown = "1. This is\n2. an ordered\n3. list block"
+        html_node = markdown_to_html_node(markdown)
+        expected = "<div><ol><li>This is</li><li>an ordered</li><li>list block</li></ol></div>"
+        print(f"\nExpected:\n{expected}\nActual:\n{html_node}")
+        self.assertEqual(html_node, expected)
+
+    def test_code_block(self):
+        markdown = "```This is a code block```"
+        html_node = markdown_to_html_node(markdown)
+        expected = "<div><pre><code>This is a code block</code></pre></div>"
+        print(f"\nExpected:\n{expected}\nActual:\n{html_node}")
+        self.assertEqual(html_node, expected)
+
+    
+
+
 if __name__ == "__main__":
     unittest.main()
