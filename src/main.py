@@ -22,6 +22,7 @@ def recursive_copy(source, dest):
 
 # generate webpage from markdown
 def generate_page(from_path, template_path, dest_path):
+
     # insightful print message
     print(f"\n* Generating page from {from_path} to {dest_path} using {template_path}...\n\n")
     # read markdown file at from_path and assign to var
@@ -42,11 +43,29 @@ def generate_page(from_path, template_path, dest_path):
     print("Done!!")
 
 
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    for entry in os.listdir(dir_path_content):
+        from_path = os.path.join(dir_path_content, entry)
+        dest_path = os.path.join(dest_dir_path, entry)
 
+        if os.path.isdir(from_path):
+            # Ensure the corresponding directory exists in dest_dir_path
+            if not os.path.exists(dest_path):
+                os.makedirs(dest_path)
+
+            # Recursively call the function for subdirectories
+            generate_pages_recursive(from_path, template_path, dest_path)
+        elif entry.endswith(".md"):
+            # Change the destination file name to end with .html
+            dest_file_path = os.path.splitext(dest_path)[0] + ".html"
+            generate_page(from_path, template_path, dest_file_path)
+
+# Main function to run the operations
 def main():
-    # delete all files in public/ and copy files from static/ to public/
+    # Delete all files in public/ and copy files from static/ to public/
     recursive_copy("static/", "public/")
-    # generate page from content/index.md using template.html and write to public/index.html
-    generate_page("content/index.md", "template.html", "public/index.html")
+    # Generate pages from the content directory
+    generate_pages_recursive("content/", "template.html", "public/")
+
 if __name__ == "__main__":
     main()
