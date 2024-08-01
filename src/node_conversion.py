@@ -68,16 +68,25 @@ def markdown_to_html_node(markdown):
             block = block.replace("```", "")
 
 
-        text_nodes = text_to_textnodes(block)
+        
         children = []
         # add <li> to list items
-        if block_type == ("unordered_list" or "ordered_list"):
-            list_items = re.split(r"(?<!\n)\*", block)
+        if block_type == ("unordered_list"):
+            list_items = re.split(r"\n *\* +", block[1:])
             list_items = [item for item in list_items if item]
-            
-            children = [LeafNode("li", li[1:].strip()) for li in list_items]
+            # add italics to list items
+            list_items = [li.replace(" *", "<i>").replace("* ", "</i>").replace(" _", "<i>").replace("_ ", "</i>") for li in list_items]
+            children = [LeafNode("li", li.strip()) for li in list_items]
+
+        elif block_type == ("ordered_list"):
+            list_items = re.split(r"\d+\. ", block)
+            list_items = [item for item in list_items if item]
+            # add italics to list items
+            list_items = [li.replace(" *", "<i>").replace("* ", "</i>").replace(" _", "<i>").replace("_ ", "</i>") for li in list_items]
+            children = [LeafNode("li", li.strip()) for li in list_items]
 
         else:
+            text_nodes = text_to_textnodes(block)
             children = [text_node_to_html_node(node) for node in text_nodes]
 
         
@@ -100,14 +109,19 @@ test_node = TextNode("bold test", "bold")
 markdown = """
 # This is the heading.
 
-This is a **bold** word, an *italic* word in a paragraph
+This is a **bold** word, an *italic* word, and a `code word` in a paragraph
 
  * This is an unordered list block
  * with three list items
  * like this one
+ * AND THIS RISKY *ITALIC* ONE
+ * AND THE ALTERNATIVE _ITALIC_ ONE
 
  1. This is an ORDERED list
  2. I don't think it works
 
-```This is a code block```"""
-print(markdown_to_html_node(markdown))
+```This is a code block```
+"""
+html_node = markdown_to_html_node(markdown)
+# print(html_node)
+print(">\n<".join(html_node.split("><")))

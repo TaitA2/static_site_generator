@@ -16,7 +16,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         else:
             split_node = old_node.text.split(delimiter)
             # raise exception if no closing delimiter found
-            if len(split_node) % 2 == 0 and text_type != "italic":
+            if len(split_node) % 2 == 0:
                 raise Exception("closing delimiter not found")
             # make new nodes of old node
             for i in range(len(split_node)):
