@@ -33,6 +33,19 @@ class TestLinkExtraction(unittest.TestCase):
         # print(f"\nExpected:\n{expected}\nActual:\n{result}")
         self.assertEqual(result, expected)
         
+class TestTitleExtraction(unittest.TestCase):
+    def test_title(self):
+        markdown = "# This is the title\n\n## This is not"
+        result = extract_title(markdown)
+        expected = "This is the title"
+        print(f"\nExpected:\n{expected}\nActual:\n{result}")
+        self.assertEqual(result, expected)
+        
+    def test_exception(self):
+        with self.assertRaises(Exception, msg="no h1 element found for title extraction"):
+            markdown = "## There is no title here"
+            result = extract_title(markdown)
+            
 
 if __name__ == "__main__":
     unittest.main()

@@ -23,4 +23,5 @@ def main():
     # call recursive copy func from static/ to public/
     recursive_copy("static/", "public/")
 
-main()
+if __name__ == "__main__":
+    main()
