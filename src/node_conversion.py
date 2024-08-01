@@ -68,20 +68,21 @@ def markdown_to_html_node(markdown):
         if block_type == "code":
             block = block.replace("```", "")
 
-
+        if block_type == "quote":
+            block = block[1:].strip()
         
         children = []
         # add <li> to list items
         if block_type == ("unordered_list"):
             list_items = re.split(r"\n *\* +", block[1:])
-            list_items = [item for item in list_items if item]
+            list_items = [item.strip() for item in list_items if item]
             # add italics to list items
             text_nodes = [(text_to_textnodes(f"<li>{li}</li>")) for li in list_items]
             text_nodes = [item for sublist in text_nodes for item in sublist]
 
         elif block_type == ("ordered_list"):
             list_items = re.split(r"\d+\. ", block)
-            list_items = [item for item in list_items if item]
+            list_items = [item.strip() for item in list_items if item]
             # add italics to list items
             text_nodes = [(text_to_textnodes(f"<li>{li}</li>")) for li in list_items]
             text_nodes = [item for sublist in text_nodes for item in sublist]
@@ -102,30 +103,33 @@ def markdown_to_html_node(markdown):
   
     return "<div>"+"".join(html_blocks)+"</div>"
 
+def main():
+    test_node = TextNode("bold test", "bold")
+    # print(text_node_to_html_node(test_node).to_html())
+    # text = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+    # nodes = text_to_textnodes(text)
+    # print(nodes)
 
-test_node = TextNode("bold test", "bold")
-# print(text_node_to_html_node(test_node).to_html())
-# text = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
-# nodes = text_to_textnodes(text)
-# print(nodes)
+    markdown = """
+    # This is the heading.
 
-markdown = """
-# This is the heading.
+    This is text with a **bold** word, an *italic* word, a `code block`, an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg), and a [link](https://boot.dev)
 
-This is text with a **bold** word, an *italic* word, a `code block`, an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg), and a [link](https://boot.dev)
+    * This is an unordered list block
+    * with three list items
+    * like this one
+    * AND THIS RISKY *ITALIC* ONE
+    * AND THE ALTERNATIVE _ITALIC_ ONE
+    * but does it support a [link](https://boot.dev)
 
- * This is an unordered list block
- * with three list items
- * like this one
- * AND THIS RISKY *ITALIC* ONE
- * AND THE ALTERNATIVE _ITALIC_ ONE
- * but does it support a [link](https://boot.dev)
+    1. This is an ORDERED list
+    2. I don't think it works
 
- 1. This is an ORDERED list
- 2. I don't think it works
+    ```This is a code block```
+    """
+    html_node = markdown_to_html_node(markdown)
+    print(html_node)
+    # print(">\n<".join(html_node.split("><")))
 
-```This is a code block```
-"""
-html_node = markdown_to_html_node(markdown)
-print(html_node)
-# print(">\n<".join(html_node.split("><")))
+if __name__ == "__main__":
+    main()
